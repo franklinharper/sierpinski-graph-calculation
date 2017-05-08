@@ -1,6 +1,6 @@
 package com.franklinharper.sierpinskigraphcalculation;
 
-public class Main {
+public class SierpinskiGraph {
 
   static final int MAX_M = 12;
   static final int MAX_N = 12;
