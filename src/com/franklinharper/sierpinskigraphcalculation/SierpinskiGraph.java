@@ -47,25 +47,23 @@ public class SierpinskiGraph {
     System.out.println("---- End of initial condition ----");
 
     for (int m = 2; m <= maxM; m++) {
-      // At each step, we are calculating the thetaValues for n + 1,
-      // so when n == maxN - 1 we wil be calculating the thetaValues for maxN.
-      for (int n = 0; n <= maxN - 1; n++) {
-        thetaValues[n + 1][m] = new long[power(m, n + 1) + 1];
-        for (int l = 0; l <= power(m, n + 1); l++) {
-          System.out.print(String.format("thetaValues[%d][%d][%d] = ", n + 1, m, l));
-          int lPrime = l - k(n + 1, m, l) * power(m, n);
+      // At each step, we are calculating the thetaValues for n
+      for (int n = 1; n <= maxN; n++) {
+        thetaValues[n][m] = new long[power(m, n) + 1];
+        for (int l = 0; l <= power(m, n); l++) {
+          System.out.print(String.format("thetaValues[%d][%d][%d] = ", n, m, l));
+          int lPrime = l - k(n, m, l) * power(m, n -1);
           int correctionFactor;
-          if (q(n, m, lPrime) <= k(n + 1, m, l)) {
-            correctionFactor = -q(n, m, lPrime);
+          if (q(n - 1, m, lPrime) <= k(n, m, l)) {
+            correctionFactor = -q(n - 1, m, lPrime);
           } else {
-            // TODO same check on using n + 1 for k as above.
-            correctionFactor = q(n, m, lPrime) - 2 * k(n + 1, m, l);
+            correctionFactor = q(n - 1, m, lPrime) - 2 * k(n, m, l);
           }
-          thetaValues[n + 1][m][l]
-              = k(n + 1, m, l) * (m - k(n + 1, m, l))
-              + thetaValues[n][m][lPrime]
+          thetaValues[n][m][l]
+              = k(n, m, l) * (m - k(n, m, l))
+              + thetaValues[n - 1][m][lPrime]
               + correctionFactor;
-          System.out.println(thetaValues[n + 1][m][l]);
+          System.out.println(thetaValues[n][m][l]);
         }
       }
     }
