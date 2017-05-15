@@ -1,16 +1,90 @@
 package com.franklinharper.sierpinskigraphcalculation;
 
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SierpinskiGraphTest {
 
   @Test
+  void verifyInequality_Is_True_For_N_1_M_2() {
+
+    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
+    // So for testing purposes we don't need to set all the values in the
+    // thetaValues array.
+    long[][][] thetaValues = new long[2][3][3];
+    // These are real thetaValues[n:1][m:2]
+    thetaValues[1][2][0] = 0;
+    thetaValues[1][2][1] = 1;
+    thetaValues[1][2][2] = 0;
+
+    assertTrue(SierpinskiGraph.verifyInequality(1, 2, thetaValues));
+  }
+
+  @Test
+  void verifyInequality_Is_False_With_Higher_Theta_Values() {
+
+    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
+    // So for testing purposes we don't need to set all the values in the
+    // thetaValues array.
+    long[][][] thetaValues = new long[2][3][3];
+    // Fake thetaValues[n:1][m:2], for testing purposes only.
+    thetaValues[1][2][0] = 1; // Fake value, the real value is 0.
+    thetaValues[1][2][1] = 1;
+    thetaValues[1][2][2] = 1; // Fake value, the real value is 0.
+
+    assertFalse(SierpinskiGraph.verifyInequality(1, 2, thetaValues));
+  }
+
+  @Test
+  void verifyInequality_Is_True_For_N_2_M_3() {
+
+    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
+    // So for testing purposes we don't need to set all the values in the
+    // thetaValues array.
+    long[][][] thetaValues = new long[3][4][10];
+    // These are real thetaValues[n:2][m:3]
+    thetaValues[2][3][0] = 0;
+    thetaValues[2][3][1] = 2;
+    thetaValues[2][3][2] = 3;
+    thetaValues[2][3][3] = 2;
+    thetaValues[2][3][4] = 3;
+    thetaValues[2][3][5] = 3;
+    thetaValues[2][3][6] = 2;
+    thetaValues[2][3][7] = 3;
+    thetaValues[2][3][8] = 3;
+    thetaValues[2][3][9] = 0;
+
+    assertTrue(SierpinskiGraph.verifyInequality(2, 3, thetaValues));
+  }
+
+  @Test
+  void verifyInequality_Is_False_For_N_2_M_3_With_Higher_Theta_Values() {
+
+    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
+    // So for testing purposes we don't need to set all the values in the
+    // thetaValues array.
+    long[][][] thetaValues = new long[3][4][10];
+    // These are real thetaValues[n:2][m:3]
+    thetaValues[2][3][0] = 0;
+    thetaValues[2][3][1] = 2;
+    thetaValues[2][3][2] = 3;
+    thetaValues[2][3][3] = 2;
+    thetaValues[2][3][4] = 3;
+    thetaValues[2][3][5] = 3;
+    thetaValues[2][3][6] = 2;
+    thetaValues[2][3][7] = 3;
+    thetaValues[2][3][8] = 3;
+    thetaValues[2][3][9] = 3; // Fake value, the real value is 0.
+
+    assertFalse(SierpinskiGraph.verifyInequality(2, 3, thetaValues));
+  }
+
+  @Test
   void sigmaTest() {
     // TODO Dad provide values for the test
-    // TODO Frank create a README file that contains a link to the paper published in Arxiv.
     assertEquals(0, SierpinskiGraph.sigma(0, 2, 0, 0));
 //    System.out.println( "sigma(0, 2, 0, 0) = " + SierpinskiGraph.sigma(0, 2, 0, 0));
 //    System.out.println( "sigma(2, 3, 5, 3) = " + SierpinskiGraph.sigma(2, 3, 5, 3));
