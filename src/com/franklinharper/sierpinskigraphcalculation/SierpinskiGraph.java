@@ -7,9 +7,6 @@ public class SierpinskiGraph {
   // TODO add script to run the conjecture verification
   // TODO add script to run the tests.
 
-  // TODO fix naming problem below
-  // The name for this constant is misleading, since the verification
-  // doesn't actually take place for m == MAX_M.
   static final int MAX_M = 2;
 
   // Verify that Conjecture 1 from the paper is true for
