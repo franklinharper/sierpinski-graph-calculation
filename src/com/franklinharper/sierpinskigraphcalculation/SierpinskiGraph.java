@@ -7,7 +7,7 @@ public class SierpinskiGraph {
   // TODO add script to run the conjecture verification
   // TODO add script to run the tests.
 
-  static final int MAX_M = 2;
+  static final int MAX_M = 12;
 
   // Verify that Conjecture 1 from the paper is true for
   // all n, m such that n >= 2, n >= 1, and n + m <= MAX_M
