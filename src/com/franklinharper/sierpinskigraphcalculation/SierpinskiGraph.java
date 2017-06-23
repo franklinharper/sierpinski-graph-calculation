@@ -3,10 +3,7 @@ package com.franklinharper.sierpinskigraphcalculation;
 // TODO insert link to the paper published on Arxiv.
 
 public class SierpinskiGraph {
-
-  // TODO add script to run the conjecture verification
-  // TODO add script to run the tests.
-
+  
   static final int MAX_M = 12;
 
   // Verify that Conjecture 1 from the paper is true for
