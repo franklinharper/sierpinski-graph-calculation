@@ -35,6 +35,8 @@ class SierpinskiGraphTest {
     thetaValues[1][2][1] = 1;
     thetaValues[1][2][2] = 1; // Fake value, the real value is 0.
 
+    System.out.println("The failure to verify the inequality below is expected.");
+    System.out.println("For testing purposes fake thetaValues have been supplied.");
     assertFalse(SierpinskiGraph.verifyInequality(1, 2, thetaValues));
   }
 
@@ -79,6 +81,8 @@ class SierpinskiGraphTest {
     thetaValues[2][3][8] = 3;
     thetaValues[2][3][9] = 3; // Fake value, the real value is 0.
 
+    System.out.println("The failure to verify the inequality below is expected.");
+    System.out.println("For testing purposes fake thetaValues have been supplied.");
     assertFalse(SierpinskiGraph.verifyInequality(2, 3, thetaValues));
   }
 
