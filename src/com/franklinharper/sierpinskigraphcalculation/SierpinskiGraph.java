@@ -3,7 +3,7 @@ package com.franklinharper.sierpinskigraphcalculation;
 // TODO insert link to the paper published on Arxiv.
 
 public class SierpinskiGraph {
-  
+
   static final int MAX_M = 12;
 
   // Verify that Conjecture 1 from the paper is true for
@@ -132,7 +132,7 @@ public class SierpinskiGraph {
     }
   }
 
-  // Definition 3 in the paper defines sigma(int n, int m, int l0, int l1)
+  // Definition 5 in the paper defines sigma(int n, int m, int l0, int l1)
   static int sigma(int n, int m, int l0, int l1) {
     if (!(l1 >= 0 && l0 >= l1 && power(m, n) >= l0)) {
       throw new IllegalArgumentException(
