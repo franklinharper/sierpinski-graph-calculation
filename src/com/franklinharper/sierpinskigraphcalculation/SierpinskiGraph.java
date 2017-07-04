@@ -141,7 +141,7 @@ public class SierpinskiGraph {
     if (l0 + l1 <= power(m, n)) {
       return q(n, m, l1) + (q(n, m, l0 + l1) - q(n, m, l0));
     } else {
-      return q(n, m, l1) - (q(n, m, l0 + l1 - power(m, n)) + (m - q(n, m, l0)));
+      return q(n, m, l1) - q(n, m, l0 + l1 - power(m, n)) + (m - q(n, m, l0));
     }
   }
 
