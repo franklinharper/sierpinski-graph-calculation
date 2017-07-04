@@ -4,51 +4,76 @@ package com.franklinharper.sierpinskigraphcalculation;
 
 public class SierpinskiGraph {
 
-  static final int MAX_M = 12;
+  static final int MAX_M = 13;
 
   // Verify that Conjecture 1 from the paper is true for
   // all n, m such that n >= 2, n >= 1, and n + m <= MAX_M
   //
   public static void main(String[] args) {
+    verifyInequality(2, MAX_M, 1);
+  }
 
-    for (int m = 2; m <= MAX_M; m++) {
-      for (int n = 1; n <= MAX_M - m; n++) {
+  static long verifyInequality(int initialM, int maxM, int initialN) {
+    System.out.println(String.format(
+        "Verifying conjecture  for all n, m such that n >= %d, m >= %d, and n + m <= %d",
+        initialN, initialM, maxM
+    ));
+    long sumExcesses = 0;
+    for (int m = initialM; m <= maxM; m++) {
+      for (int n = initialN; n <= maxM - m; n++) {
         System.out.println(String.format("Calculating thetaValues for n:%d m:%d", n, m));
-        long[][][] thetaValues = thetaValues(n, m);
-        System.out.println("verifying inequality");
-        boolean verified = verifyInequality(n, m, thetaValues);
-        if (!verified) {
-          // Immediately stop the verification
-          throw new IllegalStateException();
-        }
+        long[][][] theta = thetaValues(n, m);
+        sumExcesses += verifyInequalityForGivenNandM(n, m, theta);
       }
     }
-    System.out.println("Conjecture verified for all n, m such that n >= 2, n >= 1, and n + m <= " + MAX_M);
+    System.out.println(String.format(
+        "Conjecture verified for all n, m such that n >= %d, m >= %d, and n + m <= %d",
+        initialN, initialM, maxM
+    ));
+    System.out.println(String.format(
+        "sumExcesses: %d for initialM:%d maxM:%d initialN:%d",
+        sumExcesses, initialM, maxM, initialN
+    ));
+    return sumExcesses;
   }
 
   // Verify that Conjecture 1 from the paper is true for given values of
   // n, m, and theta.
-  static boolean verifyInequality(int n, int m, long[][][] thetaValues) {
-    boolean verified;
-
-    for (int l0 = 0; l0 <= power(m, n); l0++) {
-      for (int l1 = 0; l1 <= l0; l1++) {
-        if (l0 + l1 <= power(m, n)) {
-          verified =
-              thetaValues[n][m][l0 + l1] + sigma(n, m, l0, l1)
-                  <= thetaValues[n][m][l0] + thetaValues[n][m][l1];
-        } else {
-          verified =
-              thetaValues[n][m][l0 + l1 - power(m, n)] + sigma(n, m, l0, l1)
-                  <= thetaValues[n][m][l0] + thetaValues[n][m][l1];
+  static long verifyInequalityForGivenNandM(int n, int m, long[][][] theta) {
+    System.out.println(String.format("Verifying inequality for n:%d m:%d", n, m));
+    long sumExcesses = 0;
+    for (int l = 0; l <= power(m, n); l++) {
+      for (int lPrime = 0; lPrime <= l; lPrime++) {
+        long excess = excess(n, m, l, lPrime, theta);
+        if (excess < 0) {
+          // Immediately stop the verification
+          throw new IllegalStateException(
+              String.format("Inequality not true for n:%d m:%d l:%d lPrime:%d", n, m, l, lPrime));
         }
-        if (!verified) {
-          System.out.println(String.format("Inequality not true for n:%d m:%d l0:%d l1:%d", n, m, l0, l1));
-          return false;
-        }
+        sumExcesses += excess;
       }
     }
-    return true;
+    return sumExcesses;
+  }
+
+  // This function calculates the difference between the RHS and the LHS
+  // of the inequality, aka the excess.
+  //
+  // If the excess is >= 0 then the inequality holds true.
+  //
+  // Calculating the excess between RHS and LHS enables fine grained
+  // testing that the results are as expected.
+  static long excess(int n, int m, int l, int lPrime, long[][][] theta) {
+    long excess = 0;
+    if (l + lPrime <= power(m, n)) {
+      excess = theta[n][m][l] + theta[n][m][lPrime]
+          - (theta[n][m][l + lPrime] + sigma(n, m, l, lPrime));
+    } else {
+      excess = theta[n][m][l] + theta[n][m][lPrime]
+          - (theta[n][m][l + lPrime - power(m, n)] + sigma(n, m, l, lPrime));
+    }
+    System.out.println(String.format("excess: %d for n:%d m:%d l0:%d l1:%d", excess, n, m, l, lPrime));
+    return excess;
   }
 
   // Use Lemma 3 from the paper to calculate values of theta for:

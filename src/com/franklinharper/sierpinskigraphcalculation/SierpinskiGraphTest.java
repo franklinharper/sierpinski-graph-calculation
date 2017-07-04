@@ -2,88 +2,107 @@ package com.franklinharper.sierpinskigraphcalculation;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static com.franklinharper.sierpinskigraphcalculation.SierpinskiGraph.verifyInequality;
+import static org.junit.jupiter.api.Assertions.*;
 
 class SierpinskiGraphTest {
 
+  // Caution when running this test, it takes more than 5 hours to run on a MacBook pro
   @Test
-  void verifyInequality_Is_True_For_N_1_M_2() {
-
-    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
-    // So for testing purposes we don't need to set all the values in the
-    // thetaValues array.
-    long[][][] thetaValues = new long[2][3][3];
-    // These are real thetaValues[n:1][m:2]
-    thetaValues[1][2][0] = 0;
-    thetaValues[1][2][1] = 1;
-    thetaValues[1][2][2] = 0;
-
-    assertTrue(SierpinskiGraph.verifyInequality(1, 2, thetaValues));
+  void sumExcesses_isEqualToGwohosResult() {
+    long sumExcesses = verifyInequality(2, 13, 2);
+    assertEquals(3968105989580L, sumExcesses);
   }
 
   @Test
-  void verifyInequality_Is_False_With_Higher_Theta_Values() {
+  void sumExcessesTest() {
+    long sumExcesses = verifyInequality(2, 5, 1);
+    assertEquals(62, sumExcesses);
+  }
 
-    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
-    // So for testing purposes we don't need to set all the values in the
-    // thetaValues array.
-    long[][][] thetaValues = new long[2][3][3];
-    // Fake thetaValues[n:1][m:2], for testing purposes only.
-    thetaValues[1][2][0] = 1; // Fake value, the real value is 0.
-    thetaValues[1][2][1] = 1;
-    thetaValues[1][2][2] = 1; // Fake value, the real value is 0.
+  @Test
+  void verifyInequalityTest() {
+    long[][][] theta = SierpinskiGraph.thetaValues(2, 3);
+    assertEquals(
+        48,
+        SierpinskiGraph.verifyInequalityForGivenNandM(2, 3, theta)
+    );
+    assertEquals(
+        48,
+        SierpinskiGraph.verifyInequalityForGivenNandM(2, 3, theta)
+    );
+  }
 
+  @Test
+  void verifyInequality_is_false_for_N_2_M_3_With_fake_theta_value() {
+    long[][][] theta = SierpinskiGraph.thetaValues(2, 3);
+    // For testing purposes, insert a fake value of theta that invalidates
+    // the inequality. The real value is 0.
+    theta[2][3][9] = 3;
     System.out.println("The failure to verify the inequality below is expected.");
     System.out.println("For testing purposes fake thetaValues have been supplied.");
-    assertFalse(SierpinskiGraph.verifyInequality(1, 2, thetaValues));
+    assertThrows(IllegalStateException.class, () -> {
+      SierpinskiGraph.verifyInequalityForGivenNandM(2, 3, theta);
+    });
   }
 
   @Test
-  void verifyInequality_Is_True_For_N_2_M_3() {
+  void excessTest() {
+    final int n = 2;
+    final int m = 3;
+    long[][][] theta = SierpinskiGraph.thetaValues(n, m);
 
-    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
-    // So for testing purposes we don't need to set all the values in the
-    // thetaValues array.
-    long[][][] thetaValues = new long[3][4][10];
-    // These are real thetaValues[n:2][m:3]
-    thetaValues[2][3][0] = 0;
-    thetaValues[2][3][1] = 2;
-    thetaValues[2][3][2] = 3;
-    thetaValues[2][3][3] = 2;
-    thetaValues[2][3][4] = 3;
-    thetaValues[2][3][5] = 3;
-    thetaValues[2][3][6] = 2;
-    thetaValues[2][3][7] = 3;
-    thetaValues[2][3][8] = 3;
-    thetaValues[2][3][9] = 0;
+    // Values for l => 1, and 1 <= lPrime <= l
+    assertEquals(0, SierpinskiGraph.excess(n, m, 1, 1, theta));
 
-    assertTrue(SierpinskiGraph.verifyInequality(2, 3, thetaValues));
-  }
+    // Values for l => 2, and 1 <= lPrime <= l
+    assertEquals(2, SierpinskiGraph.excess(n, m, 2, 1, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 2, 2, theta));
 
-  @Test
-  void verifyInequality_Is_False_For_N_2_M_3_With_Higher_Theta_Values() {
+    // Values for l => 3, and 1 <= lPrime <= l
+    assertEquals(0, SierpinskiGraph.excess(n, m, 3, 1, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 3, 2, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 3, 3, theta));
 
-    // For given n,m, only thetaValues[n][m] are used to verify the conjecture.
-    // So for testing purposes we don't need to set all the values in the
-    // thetaValues array.
-    long[][][] thetaValues = new long[3][4][10];
-    // These are real thetaValues[n:2][m:3]
-    thetaValues[2][3][0] = 0;
-    thetaValues[2][3][1] = 2;
-    thetaValues[2][3][2] = 3;
-    thetaValues[2][3][3] = 2;
-    thetaValues[2][3][4] = 3;
-    thetaValues[2][3][5] = 3;
-    thetaValues[2][3][6] = 2;
-    thetaValues[2][3][7] = 3;
-    thetaValues[2][3][8] = 3;
-    thetaValues[2][3][9] = 3; // Fake value, the real value is 0.
+    // Values for l => 4, and 1 <= lPrime <= l
+    assertEquals(0, SierpinskiGraph.excess(n, m, 4, 1, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 4, 2, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 4, 3, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 4, 4, theta));
 
-    System.out.println("The failure to verify the inequality below is expected.");
-    System.out.println("For testing purposes fake thetaValues have been supplied.");
-    assertFalse(SierpinskiGraph.verifyInequality(2, 3, thetaValues));
+    // Values for l => 5, and 1 <= lPrime <= l
+    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 1, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 2, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 3, theta));
+    assertEquals(4, SierpinskiGraph.excess(n, m, 5, 4, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 5, theta));
+
+    // Values for l => 6, and 1 <= lPrime <= l
+    assertEquals(0, SierpinskiGraph.excess(n, m, 6, 1, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 6, 2, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 6, 3, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 6, 4, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 6, 5, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 6, 6, theta));
+
+    // Values for l => 7, and 1 <= lPrime <= l
+    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 1, theta));
+    assertEquals(4, SierpinskiGraph.excess(n, m, 7, 2, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 3, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 4, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 5, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 7, 6, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 7, theta));
+
+    // Values for l => 8, and 1 <= lPrime <= l
+    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 1, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 2, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 3, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 4, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 5, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 6, theta));
+    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 7, theta));
+    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 8, theta));
   }
 
   @Test
@@ -120,14 +139,14 @@ class SierpinskiGraphTest {
   @Test
   void kTest() {
 
-//    k(m,n,l), For m => 2, n => 2
+//    k(n,m,l), For m => 2, n => 2
     assertEquals(0, SierpinskiGraph.k(2, 2, 0));
     assertEquals(0, SierpinskiGraph.k(2, 2, 1));
     assertEquals(1, SierpinskiGraph.k(2, 2, 2));
     assertEquals(1, SierpinskiGraph.k(2, 2, 3));
     assertEquals(2, SierpinskiGraph.k(2, 2, 4));
 
-//    k(m,n,l), For m => 2, n => 3
+//    k(n,m,l), For m => 2, n => 3
     assertEquals(0, SierpinskiGraph.k(3, 2, 0));
     assertEquals(0, SierpinskiGraph.k(3, 2, 1));
     assertEquals(0, SierpinskiGraph.k(3, 2, 2));
@@ -138,7 +157,7 @@ class SierpinskiGraphTest {
     assertEquals(1, SierpinskiGraph.k(3, 2, 7));
     assertEquals(2, SierpinskiGraph.k(3, 2, 8));
 
-//    k(m,n,l), For m => 3, n => 2
+//    k(n,m,l), For m => 3, n => 2
     assertEquals(0, SierpinskiGraph.k(2, 3, 0));
     assertEquals(0, SierpinskiGraph.k(2, 3, 1));
     assertEquals(0, SierpinskiGraph.k(2, 3, 2));
@@ -150,7 +169,7 @@ class SierpinskiGraphTest {
     assertEquals(2, SierpinskiGraph.k(2, 3, 8));
     assertEquals(3, SierpinskiGraph.k(2, 3, 9));
 
-//    k(m,n,l), For m => 3, n => 3
+//    k(n,m,l), For m => 3, n => 3
     assertEquals(0, SierpinskiGraph.k(3, 3, 0));
     assertEquals(0, SierpinskiGraph.k(3, 3, 1));
     assertEquals(0, SierpinskiGraph.k(3, 3, 2));
@@ -184,14 +203,14 @@ class SierpinskiGraphTest {
   @Test
   void qTest() {
 
-    // k(m,n,l), For m => 2, n => 2
+    // q(n,m,l), For m => 2, n => 2
     assertEquals(0, SierpinskiGraph.q(2, 2, 0));
     assertEquals(1, SierpinskiGraph.q(2, 2, 1));
     assertEquals(1, SierpinskiGraph.q(2, 2, 2));
     assertEquals(1, SierpinskiGraph.q(2, 2, 3));
     assertEquals(2, SierpinskiGraph.q(2, 2, 4));
 
-    // k(m,n,l), For m => 2, n => 3
+    // q(n,m,l), For m => 2, n => 3
     assertEquals(0, SierpinskiGraph.q(3, 2, 0));
     assertEquals(1, SierpinskiGraph.q(3, 2, 1));
     assertEquals(1, SierpinskiGraph.q(3, 2, 2));
@@ -202,7 +221,7 @@ class SierpinskiGraphTest {
     assertEquals(1, SierpinskiGraph.q(3, 2, 7));
     assertEquals(2, SierpinskiGraph.q(3, 2, 8));
 
-    // k(m,n,l), For m => 3, n => 2
+    // q(n,m,l), For m => 3, n => 2
     assertEquals(0, SierpinskiGraph.q(2, 3, 0));
     assertEquals(1, SierpinskiGraph.q(2, 3, 1));
     assertEquals(1, SierpinskiGraph.q(2, 3, 2));
@@ -214,7 +233,7 @@ class SierpinskiGraphTest {
     assertEquals(2, SierpinskiGraph.q(2, 3, 8));
     assertEquals(3, SierpinskiGraph.q(2, 3, 9));
 
-    // k(m,n,l), For m => 3, n => 3
+    // q(n,m,l), For m => 3, n => 3
     assertEquals(0, SierpinskiGraph.q(3, 3, 0));
     assertEquals(1, SierpinskiGraph.q(3, 3, 1));
     assertEquals(1, SierpinskiGraph.q(3, 3, 2));
