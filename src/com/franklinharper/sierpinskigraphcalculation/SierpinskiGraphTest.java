@@ -88,12 +88,33 @@ class SierpinskiGraphTest {
 
   @Test
   void sigmaTest() {
-    // TODO Dad provide values for the test
+//    sigma(n,m,l0, l1), For m => 2, n => 0
     assertEquals(0, SierpinskiGraph.sigma(0, 2, 0, 0));
-//    System.out.println( "sigma(0, 2, 0, 0) = " + SierpinskiGraph.sigma(0, 2, 0, 0));
-//    System.out.println( "sigma(2, 3, 5, 3) = " + SierpinskiGraph.sigma(2, 3, 5, 3));
-//    System.out.println( "sigma(2, 3, 5, 4) = " + SierpinskiGraph.sigma(2, 3, 5, 4));
-//    System.out.println( "sigma(2, 3, 5, 5) = " + SierpinskiGraph.sigma(2, 3, 5, 5));
+
+//    sigma(n,m,l0, l1), For m => 2, n => 1
+    assertEquals(0, SierpinskiGraph.sigma(1, 2, 0, 0));
+    assertEquals(0, SierpinskiGraph.sigma(1, 2, 1, 0));
+    assertEquals(0, SierpinskiGraph.sigma(1, 2, 2, 0));
+    assertEquals(2, SierpinskiGraph.sigma(1, 2, 1, 1));
+    assertEquals(0, SierpinskiGraph.sigma(1, 2, 2, 1));
+    assertEquals(0, SierpinskiGraph.sigma(1, 2, 2, 2));
+
+//    sigma(n,m,l0, l1), For m => 2, n => 2
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 0, 0));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 1, 0));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 2, 0));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 3, 0));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 4, 0));
+    assertEquals(1, SierpinskiGraph.sigma(2, 2, 1, 1));
+    assertEquals(1, SierpinskiGraph.sigma(2, 2, 2, 1));
+    assertEquals(2, SierpinskiGraph.sigma(2, 2, 3, 1));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 4, 1));
+    assertEquals(2, SierpinskiGraph.sigma(2, 2, 2, 2));
+    assertEquals(1, SierpinskiGraph.sigma(2, 2, 3, 2));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 4, 2));
+    assertEquals(1, SierpinskiGraph.sigma(2, 2, 3, 3));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 4, 3));
+    assertEquals(0, SierpinskiGraph.sigma(2, 2, 4, 4));
   }
 
   @Test
