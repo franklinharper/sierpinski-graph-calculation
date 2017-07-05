@@ -4,23 +4,23 @@ package com.franklinharper.sierpinskigraphcalculation;
 
 public class SierpinskiGraph {
 
-  static final int MAX_M = 13;
+  static final int MAX_M_N = 13;
 
   // Verify that Conjecture 1 from the paper is true for
-  // all n, m such that n >= 2, n >= 1, and n + m <= MAX_M
+  // all n, m such that n >= 2, n >= 1, and n + m <= MAX_M_N
   //
   public static void main(String[] args) {
-    verifyInequality(2, MAX_M, 1);
+    verifyInequality(2, MAX_M_N, 1);
   }
 
-  static long verifyInequality(int initialM, int maxM, int initialN) {
+  static long verifyInequality(int initialM, int maxMplusN, int initialN) {
     System.out.println(String.format(
         "Verifying conjecture  for all n, m such that n >= %d, m >= %d, and n + m <= %d",
-        initialN, initialM, maxM
+        initialN, initialM, maxMplusN
     ));
     long sumExcesses = 0;
-    for (int m = initialM; m <= maxM; m++) {
-      for (int n = initialN; n <= maxM - m; n++) {
+    for (int m = initialM; m <= maxMplusN; m++) {
+      for (int n = initialN; n <= maxMplusN - m; n++) {
         System.out.println(String.format("Calculating thetaValues for n:%d m:%d", n, m));
         long[][][] theta = thetaValues(n, m);
         sumExcesses += verifyInequalityForGivenNandM(n, m, theta);
@@ -28,11 +28,11 @@ public class SierpinskiGraph {
     }
     System.out.println(String.format(
         "Conjecture verified for all n, m such that n >= %d, m >= %d, and n + m <= %d",
-        initialN, initialM, maxM
+        initialN, initialM, maxMplusN
     ));
     System.out.println(String.format(
         "sumExcesses: %d for initialM:%d maxM:%d initialN:%d",
-        sumExcesses, initialM, maxM, initialN
+        sumExcesses, initialM, maxMplusN, initialN
     ));
     return sumExcesses;
   }
