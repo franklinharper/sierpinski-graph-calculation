@@ -72,7 +72,7 @@ public class SierpinskiGraph {
       excess = theta[n][m][l] + theta[n][m][lPrime]
           - (theta[n][m][l + lPrime - power(m, n)] + sigma(n, m, l, lPrime));
     }
-    System.out.println(String.format("excess: %d for n:%d m:%d l0:%d l1:%d", excess, n, m, l, lPrime));
+//    System.out.println(String.format("excess: %d for n:%d m:%d l0:%d l1:%d", excess, n, m, l, lPrime));
     return excess;
   }
 
