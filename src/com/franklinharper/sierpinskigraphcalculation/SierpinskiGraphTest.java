@@ -7,12 +7,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SierpinskiGraphTest {
 
-  // Caution when running this test, it takes more than 5 hours to run on a MacBook pro
-  @Test
-  void sumExcesses_isEqualToGwohosResult() {
-    long sumExcesses = verifyInequality(2, 13, 2);
-    assertEquals(3968105989580L, sumExcesses);
-  }
+  // Caution when running this test, it takes more than 5 hours to run
+  // on a MacBook pro.
+//  @Test
+//  void sumExcesses_forLargeMax_M_plus_N() {
+//    long sumExcesses = verifyInequality(2, 13, 2);
+//    assertEquals(3968105989580L, sumExcesses);
+//  }
 
   @Test
   void sumExcessesTest() {
