@@ -18,18 +18,14 @@ class SierpinskiGraphTest {
   @Test
   void sumExcessesTest() {
     long sumExcesses = verifyInequality(2, 5, 1);
-    assertEquals(62, sumExcesses);
+    assertEquals(84, sumExcesses);
   }
 
   @Test
   void verifyInequalityTest() {
     long[][][] theta = SierpinskiGraph.thetaValues(2, 3);
     assertEquals(
-        48,
-        SierpinskiGraph.verifyInequalityForGivenNandM(2, 3, theta)
-    );
-    assertEquals(
-        48,
+        60,
         SierpinskiGraph.verifyInequalityForGivenNandM(2, 3, theta)
     );
   }
@@ -54,56 +50,56 @@ class SierpinskiGraphTest {
     long[][][] theta = SierpinskiGraph.thetaValues(n, m);
 
     // Values for l => 1, and 1 <= lPrime <= l
-    assertEquals(0, SierpinskiGraph.excess(n, m, 1, 1, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 1, 1, theta));
 
     // Values for l => 2, and 1 <= lPrime <= l
-    assertEquals(2, SierpinskiGraph.excess(n, m, 2, 1, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 2, 2, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 2, 1, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 2, 2, theta));
 
     // Values for l => 3, and 1 <= lPrime <= l
-    assertEquals(0, SierpinskiGraph.excess(n, m, 3, 1, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 3, 2, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 3, 3, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 3, 1, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 3, 2, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 3, 3, theta));
 
     // Values for l => 4, and 1 <= lPrime <= l
-    assertEquals(0, SierpinskiGraph.excess(n, m, 4, 1, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 4, 2, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 4, 3, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 4, 4, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 4, 1, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 4, 2, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 4, 3, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 4, 4, theta));
 
     // Values for l => 5, and 1 <= lPrime <= l
-    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 1, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 2, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 3, theta));
-    assertEquals(4, SierpinskiGraph.excess(n, m, 5, 4, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 5, 5, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 5, 1, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 5, 2, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 5, 3, theta));
+    assertEquals(8, SierpinskiGraph.excesses(n, m, 5, 4, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 5, 5, theta));
 
     // Values for l => 6, and 1 <= lPrime <= l
-    assertEquals(0, SierpinskiGraph.excess(n, m, 6, 1, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 6, 2, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 6, 3, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 6, 4, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 6, 5, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 6, 6, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 6, 1, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 6, 2, theta));
+    assertEquals(4, SierpinskiGraph.excesses(n, m, 6, 3, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 6, 4, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 6, 5, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 6, 6, theta));
 
     // Values for l => 7, and 1 <= lPrime <= l
-    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 1, theta));
-    assertEquals(4, SierpinskiGraph.excess(n, m, 7, 2, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 3, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 4, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 5, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 7, 6, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 7, 7, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 7, 1, theta));
+    assertEquals(8, SierpinskiGraph.excesses(n, m, 7, 2, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 7, 3, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 7, 4, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 7, 5, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 7, 6, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 7, 7, theta));
 
     // Values for l => 8, and 1 <= lPrime <= l
-    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 1, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 2, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 3, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 4, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 5, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 6, theta));
-    assertEquals(2, SierpinskiGraph.excess(n, m, 8, 7, theta));
-    assertEquals(0, SierpinskiGraph.excess(n, m, 8, 8, theta));
+    assertEquals(4, SierpinskiGraph.excesses(n, m, 8, 1, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 8, 2, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 8, 3, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 8, 4, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 8, 5, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 8, 6, theta));
+    assertEquals(2, SierpinskiGraph.excesses(n, m, 8, 7, theta));
+    assertEquals(0, SierpinskiGraph.excesses(n, m, 8, 8, theta));
   }
 
   @Test

@@ -44,36 +44,48 @@ public class SierpinskiGraph {
     long sumExcesses = 0;
     for (int l = 0; l <= power(m, n); l++) {
       for (int lPrime = 0; lPrime <= l; lPrime++) {
-        long excess = excess(n, m, l, lPrime, theta);
-        if (excess < 0) {
-          // Immediately stop the verification
-          throw new IllegalStateException(
-              String.format("Inequality not true for n:%d m:%d l:%d lPrime:%d", n, m, l, lPrime));
-        }
-        sumExcesses += excess;
+        sumExcesses += excesses(n, m, l, lPrime, theta);
       }
     }
     return sumExcesses;
   }
 
-  // This function calculates the difference between the RHS and the LHS
-  // of the inequality, aka the excess.
+  // This function verifies the inequalities in conjecture 2, and immediately stops
+  // iff the conjecture is not true.
   //
-  // If the excess is >= 0 then the inequality holds true.
+  // It also calculates the difference between the RHS and the LHS
+  // of both inequalities.
   //
-  // Calculating the excess between RHS and LHS enables fine grained
-  // testing that the results are as expected.
-  static long excess(int n, int m, int l, int lPrime, long[][][] theta) {
-    long excess = 0;
+  // If both of the differences (aka excesses) is >= 0 then the conjecture holds true
+  // for the given values of n, m, l, lPrime, and theta.
+  //
+  // Calculating the excesses enables fine grained testing that calculation gives the
+  // expected results.
+
+  static long excesses(int n, int m, int l, int lPrime, long[][][] theta) {
+    long excess1 = 0;
     if (l + lPrime <= power(m, n)) {
-      excess = theta[n][m][l] + theta[n][m][lPrime]
-          - (theta[n][m][l + lPrime] + sigma(n, m, l, lPrime));
-    } else {
-      excess = theta[n][m][l] + theta[n][m][lPrime]
-          - (theta[n][m][l + lPrime - power(m, n)] + sigma(n, m, l, lPrime));
+      excess1 = theta[n][m][l] + theta[n][m][lPrime]
+                - (theta[n][m][l + lPrime] + sigma(n, m, l, lPrime));
+      if (excess1 < 0) {
+        // Immediately stop the verification
+        throw new IllegalStateException(
+            String.format("Inequality not true for excess1: %d, n:%d m:%d l:%d lPrime:%d", excess1, n, m, l, lPrime));
+      }
+    }
+
+    long excess2 = 0;
+    if (l + lPrime >= power(m,n)) {
+      excess2 = theta[n][m][l] + theta[n][m][lPrime]
+                - (theta[n][m][l + lPrime - power(m, n)] + sigma(n, m, l, lPrime));
+      if (excess2 < 0) {
+        // Immediately stop the verification
+        throw new IllegalStateException(
+            String.format("Inequality not true for excess2: %d, n:%d m:%d l:%d lPrime:%d", excess2, n, m, l, lPrime));
+      }
     }
 //    System.out.println(String.format("excess: %d for n:%d m:%d l0:%d l1:%d", excess, n, m, l, lPrime));
-    return excess;
+    return excess1 + excess2;
   }
 
   // Use Lemma 3 from the paper to calculate values of theta for:
