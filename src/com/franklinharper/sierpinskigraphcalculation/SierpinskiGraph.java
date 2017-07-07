@@ -6,7 +6,7 @@ public class SierpinskiGraph {
 
   static final int MAX_M_N = 13;
 
-  // Verify that Conjecture 1 from the paper is true for
+  // Verify that Conjecture 2 is true for
   // all n, m such that n >= 2, n >= 1, and n + m <= MAX_M_N
   //
   public static void main(String[] args) {
@@ -37,8 +37,7 @@ public class SierpinskiGraph {
     return sumExcesses;
   }
 
-  // Verify that Conjecture 1 from the paper is true for given values of
-  // n, m, and theta.
+  // Verify that Conjecture 2 is true for given values of n, m, and theta.
   static long verifyInequalityForGivenNandM(int n, int m, long[][][] theta) {
     System.out.println(String.format("Verifying inequality for n:%d m:%d", n, m));
     long sumExcesses = 0;
@@ -56,12 +55,11 @@ public class SierpinskiGraph {
   // It also calculates the difference between the RHS and the LHS
   // of both inequalities.
   //
-  // If both of the differences (aka excesses) is >= 0 then the conjecture holds true
+  // If both of the differences (aka excesses) are >= 0 then the conjecture holds true
   // for the given values of n, m, l, lPrime, and theta.
   //
   // Calculating the excesses enables fine grained testing that calculation gives the
   // expected results.
-
   static long excesses(int n, int m, int l, int lPrime, long[][][] theta) {
     long excess1 = 0;
     if (l + lPrime <= power(m, n)) {
@@ -88,7 +86,7 @@ public class SierpinskiGraph {
     return excess1 + excess2;
   }
 
-  // Use Lemma 3 from the paper to calculate values of theta for:
+  // Use Lemma 3 to calculate values of theta for:
   //    0 <= n <= maxN,
   //    2 <= m <= maxM,
   //    0 <= l <= mˆn
