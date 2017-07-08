@@ -174,11 +174,31 @@ public class SierpinskiGraph {
       throw new IllegalArgumentException(
           String.format(" sigma(n:%d, m:%d, l0:%d, l1:%d)", n, m, l0, l1));
     }
-    if (l0 + l1 <= power(m, n)) {
-      return q(n, m, l1) + (q(n, m, l0 + l1) - q(n, m, l0));
-    } else {
-      return q(n, m, l1) - q(n, m, l0 + l1 - power(m, n)) + (m - q(n, m, l0));
+
+    if (l0 + l1 < power(m, n)) {
+      return sigma1(n, m, l0, l1);
+    } else if (l0 + l1 > power(m, n)) {
+      return sigma2(n, m, l0, l1);
     }
+// l0 + l1 == power(m, n))
+// Verify that the value of both formulas is the same
+    int sigma1 = sigma1(n, m, l0, l1);
+    int sigma2 = sigma2(n, m, l0, l1);
+    if (sigma1 != sigma2) {
+      throw new IllegalArgumentException(
+          String.format("Different values for sigma(n:%d, m:%d, l0:%d, l1:%d): sigma1:%d sigma2: %d, ",
+              sigma1, sigma2, n, m, l0, l1)
+      );
+    }
+    return sigma2;
+  }
+
+  private static int sigma2(int n, int m, int l0, int l1) {
+    return q(n, m, l1) - q(n, m, l0 + l1 - power(m, n)) + (m - q(n, m, l0));
+  }
+
+  private static int sigma1(int n, int m, int l0, int l1) {
+    return q(n, m, l1) + (q(n, m, l0 + l1) - q(n, m, l0));
   }
 
   static int power(int base, int exponent) {
