@@ -5,6 +5,7 @@ package com.franklinharper.sierpinskigraphcalculation;
 public class SierpinskiGraph {
 
   static final int MAX_M_N = 13;
+  private static int[][] powerValues;
 
   // Verify that Conjecture 2 is true for
   // all n, m such that n >= 2, n >= 1, and n + m <= MAX_M_N
@@ -184,13 +185,23 @@ public class SierpinskiGraph {
     if (exponent < 0) {
       throw new IllegalArgumentException("exponent:" + exponent);
     }
-
-    // We're defining x ^ 0 to be equal to 1;
-    int result = 1;
-    for (int i = 1; i <= exponent; i++) {
-      result *= base;
+    if (powerValues==null) {
+      // calculate all the necessary values once
+      powerValues = powerValues(MAX_M_N);
     }
-    return result;
+    return powerValues[base][exponent];
+  }
+
+  private static int[][] powerValues(int maxPower) {
+    int[][] values = new int[maxPower+1][maxPower+1];
+    for (int base = 1; base <= maxPower; base++) {
+      // We're defining base^0 to be equal to 1;
+      values[base][0] = 1;
+      for (int exponent = 1; exponent <= maxPower; exponent++) {
+        values[base][exponent] = base * values[base][exponent - 1];
+      }
+    }
+    return values;
   }
 
 }

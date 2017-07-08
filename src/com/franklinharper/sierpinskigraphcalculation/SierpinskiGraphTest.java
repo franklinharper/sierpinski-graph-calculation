@@ -326,28 +326,28 @@ class SierpinskiGraphTest {
 
   @Test
   void power_returns1_whenExponentIs0() {
-    for (int base = -10; base < 11; base++) {
+    for (int base = 1; base < 11; base++) {
       assertEquals(1, SierpinskiGraph.power(base, 0));
     }
   }
 
   @Test
   void power_returnsBase_whenExponentIs1() {
-    for (int base = -10; base < 11; base++) {
+    for (int base = 1; base < 11; base++) {
       assertEquals(base, SierpinskiGraph.power(base, 1));
     }
   }
 
   @Test
   void power_returnsBaseSquared_whenExponentIs2() {
-    for (int base = -10; base < 11; base++) {
+    for (int base = 1; base < 11; base++) {
       assertEquals(base * base, SierpinskiGraph.power(base, 2));
     }
   }
 
   @Test
   void power_returnsBaseCubed_whenExponentIs3() {
-    for (int base = -10; base < 11; base++) {
+    for (int base = 1; base < 11; base++) {
       assertEquals(base * base * base, SierpinskiGraph.power(base, 3));
     }
   }
