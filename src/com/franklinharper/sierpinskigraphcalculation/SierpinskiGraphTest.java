@@ -7,8 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SierpinskiGraphTest {
 
-  // Caution when running this test, it takes more than 5 hours to run
-  // on a MacBook pro.
+// Beware when running this test! It takes ~1 hour to run on a MacBook pro.
 //  @Test
 //  void sumExcesses_forLargeMax_M_plus_N() {
 //    long sumExcesses = verifyInequality(2, 13, 2);
